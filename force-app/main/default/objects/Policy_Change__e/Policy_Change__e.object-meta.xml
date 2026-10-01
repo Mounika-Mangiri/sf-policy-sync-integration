@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Policy Change</label>
+    <pluralLabel>Policy Changes</pluralLabel>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <eventType>HighVolume</eventType>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
+    <description>Published by middleware when a policy changes in the policy-administration system.</description>
+</CustomObject>
