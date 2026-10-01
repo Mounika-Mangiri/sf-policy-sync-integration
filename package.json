@@ -1,0 +1,16 @@
+{
+  "name": "sf-policy-sync-integration",
+  "private": true,
+  "version": "1.0.0",
+  "description": "sf-policy-sync-integration - Salesforce portfolio project",
+  "scripts": {
+    "prettier:check": "prettier --check \"force-app/**/*.{cls,trigger,js,html,json}\"",
+    "prettier": "prettier --write \"force-app/**/*.{cls,trigger,js,html,json}\"",
+    "test": "node --test mock-server/test/server.test.js",
+    "mock": "node mock-server/server.js"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "prettier-plugin-apex": "^2.3.0"
+  }
+}
