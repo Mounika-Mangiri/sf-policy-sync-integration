@@ -6,6 +6,8 @@ Keeps Salesforce in step with an external policy-administration system. When a p
 
 > **Representative portfolio project.** Written independently with a synthetic API and synthetic data. It contains no employer or client code, endpoints, credentials or payload formats. In a real build the event would usually be published by an integration layer such as MuleSoft; here a mock API stands in for the source system.
 
+**Skills shown:** Salesforce integration architecture · Platform Events · REST callouts with Named Credentials / External Credentials · Queueable Apex with retry and backoff · idempotent upserts on external Ids · governor-limit-safe batching · integration logging · HttpCalloutMock testing · OpenAPI · Node.js mock API · Docker
+
 ## Business problem
 
 Service agents work in Salesforce, but premiums, status and paid-to dates live in the policy-administration system. Stale data causes wrong answers on calls. The integration has to:
