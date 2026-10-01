@@ -1,0 +1,5 @@
+[
+  { "policyNumber": "DEMO-OK-1", "status": "Active", "premiumAmount": 125.5, "paidToDate": "2026-09-30" },
+  { "policyNumber": "DEMO-OK-2", "status": "Lapsed", "premiumAmount": 89.0, "paidToDate": "2026-05-31" },
+  { "policyNumber": "DEMO-OK-3", "status": "Active", "premiumAmount": 410.25, "paidToDate": "2026-10-31" }
+]

@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: Policy Administration API (mock)
+  version: 1.0.0
+  description: Synthetic contract used by PolicyAdminClient. Not a real carrier API.
+paths:
+  /policies/{policyNumber}:
+    get:
+      summary: Current state of one policy
+      parameters:
+        - name: policyNumber
+          in: path
+          required: true
+          schema: { type: string, maxLength: 40, pattern: "^[A-Za-z0-9-]+$" }
+      security:
+        - apiKey: []
+      responses:
+        "200":
+          description: Policy found
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Policy" }
+        "401": { description: Missing or invalid API key }
+        "404": { description: Policy not found }
+        "429": { description: Throttled; retry after the Retry-After seconds }
+        "503": { description: Temporary outage; safe to retry }
+components:
+  securitySchemes:
+    apiKey: { type: apiKey, in: header, name: x-api-key }
+  schemas:
+    Policy:
+      type: object
+      required: [policyNumber, status]
+      properties:
+        policyNumber: { type: string }
+        status: { type: string, example: Active }
+        premiumAmount: { type: number, format: double }
+        paidToDate: { type: string, format: date }
