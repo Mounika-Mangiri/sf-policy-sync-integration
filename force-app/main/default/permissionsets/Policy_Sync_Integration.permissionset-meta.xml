@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Policy Sync Integration</label>
+    <description>For the integration user that runs the Policy_Change__e subscriber and PolicySyncJob. Also grant this user access to the PolicyAdminAPI external credential principal in Setup.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <classAccesses><apexClass>PolicySyncJob</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>PolicyAdminClient</apexClass><enabled>true</enabled></classAccesses>
+    <fieldPermissions><editable>true</editable><field>Insurance_Policy__c.External_Id__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Insurance_Policy__c.Status__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Insurance_Policy__c.Premium_Amount__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Insurance_Policy__c.Paid_To_Date__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Insurance_Policy__c.Last_Synced__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Integration_Log__c.Endpoint__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Integration_Log__c.Status_Code__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Integration_Log__c.Message__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Integration_Log__c.Record_Key__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Integration_Log__c.Attempt__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Integration_Log__c.Outcome__c</field><readable>true</readable></fieldPermissions>
+    <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Insurance_Policy__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+    <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Integration_Log__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+    <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Policy_Change__e</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+</PermissionSet>
