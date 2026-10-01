@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm ci
+      - name: Formatting (Prettier, Apex plugin parses every class)
+        run: npm run prettier:check
+      - name: Mock API contract tests (node:test)
+        run: npm test
+
+      - name: Apex static analysis (PMD)
+        run: |
+          curl -sSL -o pmd.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.7.0/pmd-dist-7.7.0-bin.zip
+          unzip -q pmd.zip
+          ./pmd-bin-7.7.0/bin/pmd check -d force-app -R pmd-ruleset.xml -f text --no-cache
+
+  # Runs only when a Dev Hub auth URL is stored as the SFDX_AUTH_URL repository secret.
+  apex-tests:
+    needs: static-checks
+    runs-on: ubuntu-latest
+    env:
+      SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+    steps:
+      - uses: actions/checkout@v5
+        if: env.SFDX_AUTH_URL != ''
+      - name: Install Salesforce CLI
+        if: env.SFDX_AUTH_URL != ''
+        run: npm install --global @salesforce/cli
+      - name: Authenticate Dev Hub
+        if: env.SFDX_AUTH_URL != ''
+        run: |
+          echo "$SFDX_AUTH_URL" > authUrl.txt
+          sf org login sfdx-url --sfdx-url-file authUrl.txt --alias devhub --set-default-dev-hub
+          rm authUrl.txt
+      - name: Create scratch org, deploy, run Apex tests
+        if: env.SFDX_AUTH_URL != ''
+        run: |
+          sf org create scratch --definition-file config/project-scratch-def.json --alias ci --set-default --duration-days 1 --wait 15
+          sf project deploy start --target-org ci --wait 20
+          sf apex run test --target-org ci --code-coverage --result-format human --wait 20 --test-level RunLocalTests
+      - name: Delete scratch org
+        if: always() && env.SFDX_AUTH_URL != ''
+        run: sf org delete scratch --target-org ci --no-prompt || true
